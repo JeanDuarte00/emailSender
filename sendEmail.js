@@ -1,36 +1,52 @@
 
 /**
- * This code gonna send an email
+ * This code gonna send an email, :P
+ * I recomend you to use hotmail account to do it
  *  
  */
 
+const mailer = require('nodemailer');
 
 
-const  mailer = require("nodemailer");
+let transp;
+let option;
 
-const transp = mailer.createTransport({
+/**
+ * Parameters - they all are strings
+ */
+exports.createConnection = (service, email, password)=>{
 
-	service: 'gmail',
-	auth:{
-		user: 'luccasduarte320@gmail.com',
-		pass: 'senha'
-	}
+	this.transp = mailer.createTransport({
 
-});
+		service: service,
+		auth:{
+			user: email,
+			pass: password
+		}
 
-const options = {
+	});
+}
 
-	from: 'luccasduarte320@gmail.com',
-	to: 'jean_luccas320@hotmail.com',
-	subject: 'Titulo do email',
-	text: 'Corpo da mensagem'
+exports.setOptions = (origem, destinatary, subject, message)=>{
 
-};
+	this.option = {
 
+		from: origem,
+		to: destinatary,
+		subject: subject,
+		text: message
+	
+	};
+	
+}
 
-transp.sendMail( options, (err, data)=>{
+exports.sendEmail = ()=>{
 
-	if(err) throw new Error()
-	console.log('Email enviado: '+info.response);
+	this.transp.sendMail( option, (err, resp)=>{
 
-} );
+		if(err) new Error().message;
+		console.log('Email enviado: ' + resp);
+	
+	} );
+	
+}
